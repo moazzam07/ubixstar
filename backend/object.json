@@ -1,5 +1,4 @@
 {
-    "widget": "button",
-    "text": "fdfd",
-    "buttonRadius": "fd"
+    "widget": "Text Box",
+    "text": "Hello World"
 }
