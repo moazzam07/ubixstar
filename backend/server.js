@@ -1,5 +1,7 @@
 const express = require("express"); 
-const DataSchema = require('./model/DataSchema')
+var fs = require('fs')
+var url = "mongodb://localhost:27017/";
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 
 require("dotenv").config();
 require("./config");
@@ -26,55 +28,66 @@ app.post('/result', async (req, res, next) => {
         console.log(textBox)
         if(!buttonName && !buttonRadius && !textBox){
             res.status(200).send({ status: 400, message: "Not Saved" });
-            return;
+            return;            
         }
-        const createNewData = new DataSchema({
-            buttonName: buttonName,
-            buttonRadius: buttonRadius,
-            textBox: textBox,
-        })
-        const data = await createNewData.save();
+
         var button = false;
         var textbox = false;
-        if(buttonName || buttonRadius) button = true
-        if(textBox) textbox = true
-        
-        var result;
 
+        if(buttonName || buttonRadius) button = true;
+        if(textBox) textbox = true;
+        
+        let result;
         if(button && textbox){
-            console.log(button)
-            console.log(textbox)
             result = {
-                "button" : {
-                    "widget" : "button",
-                    "text": buttonName,
-                    "buttonRadius": buttonRadius
+                button : {
+                    widget : "button",
+                    text: buttonName,
+                    buttonRadius: buttonRadius
                 },
-                "textBox" : {
-                    "widget" : "Text Box",
-                    "text": textBox
+                textBox : {
+                    widget : "Text Box",
+                    text: textBox
                 }
-                
             }
         }
         else if(button){
-            console.log(button)
             result = {
-                "widget" : "button",
-                "text": buttonName,
-                "buttonRadius": buttonRadius
+                widget : "button",
+                text: buttonName,
+                buttonRadius: buttonRadius
             }
         }
         else if(textbox){
             
             console.log(textbox)
             result = {
-                "widget" : "Text Box",
-                "text": textBox
+                widget : "Text Box",
+                text: textBox
             }
         }
 
-        res.status(200).send({ status: 200, message: result })
+        console.log("result", result);
+        fs.writeFile("./object.json", JSON.stringify(result, null, 4), (err) => {
+            if (err) {  console.error(err);  return; };
+                console.log("File has been created");
+            });
+            
+            MongoClient.connect('mongodb://127.0.0.1:27017/', function(err,client) {
+
+            if (err) throw err;
+            console.log("Connected to Database");
+            var db = client.db('test');
+        
+            // insert record
+            db.collection('data').insert(result, function(err, records) {
+                if (err) throw err;
+                console.log("Record Saved");
+            });
+        });
+
+
+        res.status(200).send({ status: 200, message: "saved" })
         return;
     } catch (error) {
         next(error)
