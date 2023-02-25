@@ -1,0 +1,98 @@
+.App {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.column {
+  float: left;
+  width: 30%;
+  /* padding: 10px; */
+  height: 300px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn-div {
+  height: 50px;
+}
+
+.btn {
+  height: 40px;
+  width: 200px;
+  font-size: 20px;
+}
+
+.textbox-div {
+  height: 50px;
+}
+
+.txt{
+  height: 40px;
+  width: 190px;
+  font-size: 20px;
+}
+
+.prop-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-top: 10px;
+}
+
+.label-1 {
+  margin-right: 150px;
+  font-size: 20px;
+}
+
+.label-2 {
+  margin-right: 130px;
+  font-size: 20px;
+}
+
+.label-3 {
+  margin-right: 175px;
+  font-size: 20px;
+}
+
+.txt-1{
+  height: 30px;
+  font-size: 20px;
+}
+
+.div-1{
+  margin-top: 70px;
+  width: 300px;
+  height: 300px;  
+  padding: 50px;
+  border: 1px solid black;
+}
+
+.dropped-widget {
+  margin-top: 10px;
+  justify-self: center;
+  
+}
+
+.drop {
+  height: 40px;
+  width: 300px;
+  font-size: 20px;
+}
+
+.border {
+  border-style: solid;
+  border-width: thin;
+}
+
+.div-margin {
+  margin-top: 5px;
+}
+
+.save{
+  margin-top: 50px;
+}
